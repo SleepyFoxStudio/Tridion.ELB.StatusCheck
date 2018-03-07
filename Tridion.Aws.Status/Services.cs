@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
+using System.Text.RegularExpressions;
+using System.Web.Configuration;
 
 
 namespace Tridion.Aws.Status
@@ -11,10 +13,9 @@ namespace Tridion.Aws.Status
     {
         internal Dictionary<string, ServiceController> GetListOfServices()
         {
-            var servicesList = new List<Process>();
-            ServiceController[] services = ServiceController.GetServices().Where(s => s.DisplayName.ToLower().StartsWith("sdl ") || s.DisplayName.ToLower().StartsWith("tridion ")).ToArray();
-            var servicesStatus = services.ToDictionary(s => s.ServiceName, s => s);
-            return servicesStatus;
+            var rx = new Regex(WebConfigurationManager.AppSettings["regexOfServicesToCheckIfRunning"], RegexOptions.IgnoreCase);
+            var services = ServiceController.GetServices().Where(s => rx.IsMatch(s.DisplayName) ).ToArray();
+            return services.ToDictionary(s => s.ServiceName, s => s);
         }
     }
 
