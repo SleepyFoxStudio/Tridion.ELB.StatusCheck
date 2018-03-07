@@ -23,8 +23,10 @@ namespace Tridion.Aws.Status
             context.Response.Write(Environment.MachineName + "\r\n");
 
 
-            if (!bool.TryParse(WebConfigurationManager.AppSettings["active"], out var activeMode))
+            bool activeMode;
+            if (!bool.TryParse(WebConfigurationManager.AppSettings["active"], out activeMode))
             {
+
 
                 context.Response.StatusCode = 500;
             }
