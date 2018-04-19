@@ -56,6 +56,28 @@ namespace Tridion.Aws.Status
                 }
                 context.Response.Write(service.Value.DisplayName + ":" + service.Value.Status + Environment.NewLine);
             }
+
+            var tcmItemToCheck = WebConfigurationManager.AppSettings["TcmItemToCheck"];
+            var coreServiceNetTcpBinding = WebConfigurationManager.AppSettings["CoreServiceNetTcpBinding"];
+            if (coreServiceNetTcpBinding != null && tcmItemToCheck != null)
+            {
+                string itemTitle = "";
+                try
+                {
+                    itemTitle = TridionItem.GetItem(tcmItemToCheck);
+                }
+                catch(Exception ex)
+                {
+                    if (activeMode)
+                    {
+                        hasError = true;
+                    }
+                    itemTitle = ex.Message;
+                }
+                context.Response.Write($"Testing CoreService API Get Item Title of {tcmItemToCheck} :  '{itemTitle}'{Environment.NewLine}");
+            }
+
+
             context.Response.Write(hasError ? "Error" : "OK");
             context.Response.StatusCode = hasError ? 500 : 200;
 
