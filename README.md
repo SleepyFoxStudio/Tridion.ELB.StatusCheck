@@ -7,12 +7,12 @@ Point your load balancer test page at the URL of this page and then when any Tri
 ## Getting started
 
 1. Clone this repo/grab the latest built release
-2. Place the required DLLs in the root of the project in DLLs folder
+2. If you grabbed pre-built release jump to step 6
+3. Place the required DLLs in the root of the project in DLLs folder
   * DLLs\Tridion.Common.dllDLLs\Tridion.ContentManager.dll
   * DLLs\Tridion.ContentManager.Common.dll
   * DLLs\Tridion.ContentManager.CoreService.Client.dll
   * DLLs\Tridion.Web.UI.Core.dll
-3. If you grabbed pre-built release jump to step 5 
 4. Open in visual studio 
 5. Click _Build/Publish_ and publish to local file system
 6. Take the published contents and copy them to a folder on each CME server
